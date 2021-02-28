@@ -18,6 +18,7 @@ public class OwnerController {
     private OwnerService ownerService;
 
     public OwnerController(OwnerService ownerService) {
+
         this.ownerService = ownerService;
     }
 
