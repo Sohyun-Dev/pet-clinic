@@ -1,12 +1,14 @@
 package com.example.petclinic.owner.entity;
 
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import com.example.petclinic.pet.entity.Pet;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import javax.persistence.*;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotEmpty;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Owner {
@@ -31,6 +33,11 @@ public class Owner {
     private String city;
 
     private String telephone;
+
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private Set<Pet> pets; // collection framework --> list / queue / set / map
+    // set 은 중복을 허용하지 않음
 
     public Owner() {
     }
@@ -81,5 +88,12 @@ public class Owner {
 
     public void setTelephone(String telephone) {
         this.telephone = telephone;
+    }
+
+    public void add(Pet pet){
+        if(pets == null){
+            this.pets = new HashSet<>();
+        }
+        pets.add(pet);
     }
 }

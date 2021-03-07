@@ -1,18 +1,16 @@
 package com.example.petclinic.pet.controller;
 
-import com.example.petclinic.owner.dto.OwnerCreateDto;
-import com.example.petclinic.owner.entity.Owner;
 import com.example.petclinic.pet.dto.PetCreateDto;
+import com.example.petclinic.pet.dto.PetUpdateDto;
 import com.example.petclinic.pet.entity.Pet;
 import com.example.petclinic.pet.service.PetService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
+@RestController
 public class PetController {
     private PetService petService;
 
@@ -37,5 +35,15 @@ public class PetController {
     public Optional<Pet> getPet(@PathVariable Long id){
 
         return petService.getPetBy(id);
+    }
+
+    @PutMapping("/pets/{id}")
+    public Pet putPet(@PathVariable Long id, @Valid PetUpdateDto petUpdateDto){
+        return petService.updatePetBy(id, petUpdateDto);
+    }
+
+    @DeleteMapping("/pets/{id}")
+    public void deletePet(@PathVariable Long id){
+        petService.deletePetBy(id);
     }
 }
